@@ -4,131 +4,179 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Что изменилось в WattAttack с релиза 17–18 октября.">
-<style>html{color-scheme:light}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="theme-color" content="#0A1630">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>WattAttack: что нового</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Russo+One&display=swap">
 <style>
-/* Layout: brand-gradient hero band, sticky chip nav, highlight grid, then sections as "label column | list" rows */
+/* Layout: wattattack.com look (single dark theme, site tokens --wa-site-*): sticky site bar, hero, pill nav, highlight cards, eyebrow+title sections with diamond lists */
 :root {
-  --bg: #F3F6F9;
-  --surface: #FFFFFF;
-  --fg: #0B0D12;
-  --muted: #55667A;
-  --line: #DDE5EC;
-  --accent: #1D6FD0;
-  --accent-soft: #E3EFFC;
-  --chip: #FFFFFF;
-  --grad-a: #3F33C4;
-  --grad-b: #1DC2A4;
-  --on-grad: #FFFFFF;
-  --f-display: "Russo One", "Arial Black", Impact, sans-serif;
-  --f-body: "Roboto", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --f-mono: "Roboto Mono", ui-monospace, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0B0D12; --surface: #141922; --fg: #EDF2F7; --muted: #94A5B8; --line: #232B37;
-    --accent: #31A7FE; --accent-soft: #13283F; --chip: #141922; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0B0D12; --surface: #141922; --fg: #EDF2F7; --muted: #94A5B8; --line: #232B37;
-  --accent: #31A7FE; --accent-soft: #13283F; --chip: #141922; color-scheme: dark;
+  --bg: #0A1630;          /* --wa-site-bg */
+  --bg-deep: #081228;     /* --wa-site-bg-deep */
+  --raised: #0D1D3D;      /* --wa-site-bg-raised */
+  --card: #11244A;        /* --wa-site-bg-card */
+  --strong: #16305C;      /* --wa-site-bg-strong */
+  --text: #F2F5FA;        /* --wa-site-text */
+  --text-2: #E0E8EF;      /* --wa-site-text-secondary */
+  --muted: #CAD6E2;       /* --wa-site-text-muted */
+  --quiet: #97A1B2;       /* --wa-site-text-quiet */
+  --link: #8DC0F2;        /* --wa-site-link */
+  --blue: #7BC1FE;        /* --wa-color-secondary-light */
+  --red: #CF1A1A;         /* button red, --wa-color-primary-ramp-4 */
+  --red-hover: #A31C14;
+  --success: #8FDCC2;
+  --warning: #F2B84B;
+  --outline: rgba(255,255,255,.4);
+  --hairline: rgba(255,255,255,.08);
+  --divider: rgba(255,255,255,.1);
+  --fill-hover: rgba(255,255,255,.12);
+  --f-display: "Russo One", "Onest", system-ui, sans-serif;
+  --f-body: "Onest", system-ui, sans-serif;
+  --r-card: 16px;
+  --r-control: 8px;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--fg); font: 400 16px/1.55 var(--f-body); }
-.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+body { background: var(--bg); color: var(--text); font: 400 16px/1.55 var(--f-body); -webkit-font-smoothing: antialiased; }
+a { color: var(--link); }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* Site bar */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: rgba(10,22,48,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hairline); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font-family: var(--f-display); font-size: 28px; line-height: 1; color: var(--text); text-decoration: none; letter-spacing: -.3px; }
+.logo span { color: var(--blue); }
+.bar .actions { display: flex; gap: 10px; align-items: center; }
+.btn { display: inline-flex; align-items: center; justify-content: center; font: 800 15px/1 var(--f-body); letter-spacing: 1px; text-transform: uppercase; text-decoration: none; border-radius: 7px; padding: 13px 22px; white-space: nowrap; transition: background .15s, border-color .15s; }
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-hover); }
+.btn-line { color: var(--text); border: 2px solid var(--text); padding: 11px 20px; }
+.btn-line:hover { background: var(--fill-hover); }
+.btn:focus-visible, .pills a:focus-visible, .copy:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
 /* Hero */
-.hero { background: linear-gradient(115deg, var(--grad-a), var(--grad-b)); color: var(--on-grad); position: relative; overflow: hidden; }
-.hero::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, rgba(255,255,255,.06) 0 2px, transparent 2px 22px); pointer-events: none; }
-.hero .wrap { padding-block: 40px 44px; position: relative; z-index: 1; display: grid; gap: 22px; }
-.brand { font-family: var(--f-display); font-size: 20px; letter-spacing: .02em; display: flex; align-items: center; gap: 10px; }
-.brand .mark { font-size: 22px; line-height: 1; }
-.brand .mark span { color: #9FE3FF; margin-left: -.08em; }
-.hero h1 { font-family: var(--f-display); font-weight: 400; font-size: clamp(34px, 6vw, 60px); line-height: 1.05; margin: 0; text-wrap: balance; }
-.hero p.lead { margin: 0; max-width: 62ch; font-size: 18px; opacity: .95; }
-.stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 4px 0 0; padding: 0; list-style: none; }
-.stats li { display: grid; }
-.stats b { font-family: var(--f-display); font-weight: 400; font-size: 30px; line-height: 1.1; font-variant-numeric: tabular-nums; }
-.stats span { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; opacity: .85; }
+.hero { position: relative; overflow: hidden; background:
+  radial-gradient(60% 80% at 85% 10%, rgba(74,141,199,.35), transparent 70%),
+  radial-gradient(50% 70% at 0% 100%, rgba(207,26,26,.16), transparent 70%),
+  linear-gradient(180deg, var(--bg-deep), var(--bg)); }
+.hero .wrap { padding-block: 64px 56px; display: grid; gap: 22px; }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 15px var(--f-body); letter-spacing: 1.6px; text-transform: uppercase; color: var(--muted); }
+.kicker::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 3px rgba(207,26,26,.3); }
+.hero h1 { font-family: var(--f-display); font-weight: 400; font-size: clamp(36px, 6.4vw, 64px); line-height: 1.08; letter-spacing: -.5px; margin: 0; max-width: 16ch; text-wrap: balance; }
+.hero h1 span { color: var(--blue); }
+.hero .lead { margin: 0; max-width: 60ch; font-size: 19px; color: var(--text-2); }
+.hero .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.platforms { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; padding-top: 18px; border-top: 1px solid var(--divider); font: 800 14px var(--f-body); letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-2); }
+.platforms .sep { width: 1px; height: 18px; background: var(--divider); }
+.platforms .acc { color: var(--blue); }
+.stats { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px; }
+.stats li { background: rgba(17,36,74,.7); border: 1px solid var(--hairline); border-radius: var(--r-card); padding: 14px 20px; display: grid; min-width: 130px; }
+.stats b { font-family: var(--f-display); font-weight: 400; font-size: 32px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stats span { font: 700 12px var(--f-body); letter-spacing: 1.2px; text-transform: uppercase; color: var(--quiet); }
 
-/* Nav */
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
-nav.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-nav.toc .wrap { display: flex; gap: 8px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; }
-nav.toc .wrap::-webkit-scrollbar { display: none; }
-nav.toc a { flex: none; font-size: 14px; font-weight: 500; color: var(--fg); text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--chip); white-space: nowrap; }
-nav.toc a:hover, nav.toc a:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+/* Pills nav */
+.pills { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 61px); z-index: 9; background: rgba(10,22,48,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hairline); }
+.pills .wrap { display: flex; gap: 8px; overflow-x: auto; padding-block: 12px; scrollbar-width: none; }
+.pills .wrap::-webkit-scrollbar { display: none; }
+.pills a { flex: none; font: 700 15px var(--f-body); color: var(--text); text-decoration: none; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--outline); white-space: nowrap; }
+.pills a:hover { background: var(--fill-hover); }
+.pills a.on { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-main .wrap { display: grid; gap: 56px; padding-block: 40px 64px; }
+main .wrap { display: grid; gap: 72px; padding-block: 56px 80px; }
+
+.eyebrow { margin: 0; font: 800 16px var(--f-body); letter-spacing: 1.4px; text-transform: uppercase; color: var(--link); }
+.title { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: -.3px; text-wrap: balance; }
 
 /* Highlights */
-.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
-.hl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.hl article { background: var(--surface); border: 1px solid var(--line); border-radius: 15px; padding: 18px 18px 20px; display: grid; gap: 6px; align-content: start; }
-.hl h3 { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 19px; line-height: 1.2; text-wrap: balance; }
-.hl p { margin: 0; color: var(--muted); font-size: 15px; }
-.hl .tag { font-family: var(--f-mono); font-size: 12px; color: var(--accent); letter-spacing: .04em; }
+.hl-head { display: grid; gap: 10px; margin-bottom: 26px; }
+.hl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.hl article { background: var(--card); border: 1px solid var(--hairline); border-radius: var(--r-card); padding: 24px; display: grid; gap: 10px; align-content: start; }
+.hl .tag { justify-self: start; font: 700 12px var(--f-body); letter-spacing: 1.2px; text-transform: uppercase; color: var(--link); background: rgba(141,192,242,.16); padding: 5px 10px; border-radius: 999px; }
+.hl .tag.new { color: #FFB3B6; background: rgba(220,47,57,.2); }
+.hl h3 { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 22px; line-height: 1.2; text-wrap: balance; }
+.hl p { margin: 0; color: var(--muted); font-size: 16px; }
 
 /* Sections */
-.sec { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 24px 40px; padding-top: 28px; border-top: 1px solid var(--line); scroll-margin-top: 70px; }
-.sec header { display: grid; gap: 8px; align-content: start; position: sticky; top: 76px; }
-.sec h2 { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 26px; line-height: 1.15; text-wrap: balance; }
-.sec .count { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
-.copy { justify-self: start; font: 500 13px var(--f-body); color: var(--accent); background: var(--accent-soft); border: 0; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
-.copy:hover { filter: brightness(1.05); }
-.copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.sec ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; max-width: 70ch; }
-.sec li { position: relative; padding-left: 20px; }
-.sec li::before { content: ""; position: absolute; left: 0; top: .62em; width: 8px; height: 8px; border-radius: 2px; background: linear-gradient(135deg, var(--grad-a), var(--grad-b)); }
-.sec li b { font-weight: 700; }
-.sec li ul { margin-top: 8px; gap: 4px; }
-.sec li ul li { padding-left: 16px; color: var(--muted); }
-.sec li ul li::before { width: 6px; height: 2px; top: .75em; border-radius: 0; }
-.sub { margin: 0 0 -2px; font-family: var(--f-display); font-weight: 400; font-size: 17px; color: var(--accent); }
-.plat { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 32px; }
-.plat > div { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.sec { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px 48px; scroll-margin-top: 130px; }
+.sec header { display: grid; gap: 10px; align-content: start; position: sticky; top: 140px; }
+.sec .count { font: 600 15px var(--f-body); color: var(--quiet); }
+.copy { justify-self: start; margin-top: 4px; font: 700 13px var(--f-body); letter-spacing: 1px; text-transform: uppercase; color: var(--text); background: transparent; border: 1px solid var(--outline); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+.copy:hover { background: var(--fill-hover); }
+.panel { background: var(--raised); border: 1px solid var(--hairline); border-radius: var(--r-card); padding: 28px 30px; min-width: 0; }
+.sec ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.sec li { position: relative; padding-left: 24px; color: var(--text-2); font-size: 17px; }
+.sec li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px; background: var(--blue); transform: rotate(45deg); }
+.sec li b { color: var(--text); font-weight: 700; }
+.sec li ul { margin-top: 10px; gap: 6px; }
+.sec li ul li { font-size: 16px; color: var(--muted); padding-left: 20px; }
+.sec li ul li::before { width: 6px; height: 6px; background: transparent; border: 1.5px solid var(--blue); }
+.plat { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.plat > div { background: var(--raised); border: 1px solid var(--hairline); border-radius: var(--r-card); padding: 24px 26px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.plat .sub { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 22px; color: var(--text); }
+.plat li { font-size: 16px; }
 
-footer { border-top: 1px solid var(--line); }
-footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
-.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 8px 16px; border-radius: 999px; font-size: 14px; }
+/* Bottom CTA */
+.end { background: linear-gradient(120deg, var(--strong), var(--card)); border: 1px solid var(--hairline); border-radius: var(--r-card); padding: 36px; display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: center; justify-content: space-between; }
+.end p { margin: 8px 0 0; color: var(--muted); max-width: 56ch; }
 
-@media (max-width: 860px) {
+footer { border-top: 1px solid var(--divider); background: var(--bg-deep); }
+footer .wrap { padding-block: 28px 40px; color: var(--quiet); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 999px; font: 600 14px var(--f-body); z-index: 30; }
+
+@media (max-width: 900px) {
   .hl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .sec { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .sec header { position: static; grid-template-columns: 1fr auto; align-items: center; }
-  .sec header h2 { grid-column: 1 / -1; }
+  .sec { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .sec header { position: static; }
 }
-@media (max-width: 560px) {
+@media (max-width: 600px) {
   .hl, .plat { grid-template-columns: minmax(0, 1fr); }
-  .hero p.lead { font-size: 16px; }
+  .bar .btn-line { display: none; }
+  .bar .btn { padding: 11px 14px; font-size: 13px; }
+  .logo { font-size: 24px; }
+  .pills { top: calc(env(safe-area-inset-top, 0px) + 57px); }
+  .panel, .plat > div { padding: 22px 20px; }
+  .hero .wrap { padding-block: 44px 40px; }
+  .hero .lead { font-size: 17px; }
+  .end { padding: 26px 22px; }
 }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
 </head>
 <body>
 
+<div class="bar">
+  <div class="wrap">
+    <a class="logo" href="https://wattattack.com/">Watt<span>Attack</span></a>
+    <div class="actions">
+      <a class="btn btn-line" href="https://wattattack.com/">На сайт</a>
+      <a class="btn btn-red" href="https://wattattack.com/">Попробовать</a>
+    </div>
+  </div>
+</div>
+
 <section class="hero">
   <div class="wrap">
-    <div class="brand"><span class="mark">W<span>A</span></span> WattAttack</div>
-    <h1>Что нового в WattAttack</h1>
+    <span class="kicker">Обновление · ноябрь 2026</span>
+    <h1>Что <span>нового</span> в WattAttack</h1>
     <p class="lead">Две недели работы с релиза 17–18 октября: новые форматы заездов, чат прямо в игре, призраки на сегментах и достижения, живые анимации гонщика, камеры на любой вкус, обновлённая природа на картах и много исправлений по вашим отзывам.</p>
     <ul class="stats">
       <li><b>110+</b><span>изменений</span></li>
       <li><b>13</b><span>разделов</span></li>
-      <li><b>5</b><span>платформ</span></li>
       <li><b>10</b><span>видов камеры</span></li>
     </ul>
+    <div class="platforms">
+      <span>Windows</span><span>macOS</span><span>iOS</span><span>Android</span><span>Apple TV</span><span class="sep" aria-hidden="true"></span><span class="acc">Bluetooth · ANT+</span>
+    </div>
   </div>
 </section>
 
-<nav class="toc" aria-label="Разделы">
+<nav class="pills" aria-label="Разделы">
   <div class="wrap">
-    <a href="#main">Главное</a>
+    <a href="#main" class="on">Главное</a>
     <a href="#events">Мероприятия</a>
     <a href="#spectator">Зритель</a>
     <a href="#segments">Сегменты</a>
@@ -149,24 +197,27 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
 <main>
   <div class="wrap">
 
-    <section id="main" style="scroll-margin-top:70px">
-      <p class="eyebrow">Коротко о главном</p>
+    <section id="main" style="scroll-margin-top:130px">
+      <div class="hl-head">
+        <p class="eyebrow">Коротко о главном</p>
+        <h2 class="title">Девять причин сесть на станок</h2>
+      </div>
       <div class="hl">
-        <article><span class="tag">новое</span><h3>Чат в игре</h3><p>Общий чат карты, чат мероприятия и личные сообщения: щёлкните по имени гонщика и напишите ему.</p></article>
-        <article><span class="tag">новый формат</span><h3>Пейсер и гонка «Удержись»</h3><p>Пейсер едет по заданному профилю скорости, над ним жёлтая звезда. Кто отстал, выбывает.</p></article>
-        <article><span class="tag">новое</span><h3>Призрак на сегментах</h3><p>На знакомом сегменте рядом едет полупрозрачный «вы» с лучшей попытки. Видите его только вы.</p></article>
-        <article><span class="tag">новое</span><h3>Достижения</h3><p>Награды за скорость, дистанцию, набор высоты, мощность, часы за неделю и сегменты.</p></article>
+        <article><span class="tag new">Новое</span><h3>Чат в игре</h3><p>Общий чат карты, чат мероприятия и личные сообщения: щёлкните по имени гонщика и напишите ему.</p></article>
+        <article><span class="tag new">Новый формат</span><h3>Пейсер и гонка «Удержись»</h3><p>Пейсер едет по заданному профилю скорости, над ним жёлтая звезда. Кто отстал, выбывает.</p></article>
+        <article><span class="tag new">Новое</span><h3>Призрак на сегментах</h3><p>На знакомом сегменте рядом едет полупрозрачный «вы» с лучшей попытки. Видите его только вы.</p></article>
+        <article><span class="tag new">Новое</span><h3>Достижения</h3><p>Награды за скорость, дистанцию, набор высоты, мощность, часы за неделю и сегменты.</p></article>
         <article><span class="tag">10 видов</span><h3>Камеры на любой вкус</h3><p>Сзади, ближе, сбоку, сверху, от первого лица и другие. Угол обзора настраивается.</p></article>
-        <article><span class="tag">анимации</span><h3>Гонщик как живой</h3><p>Пьёт, вытирает пот, оглядывается, встаёт на педали, меняет хват и наклоняется в поворотах.</p></article>
-        <article><span class="tag">интерфейс</span><h3>Свой экран заезда</h3><p>Любую часть экрана можно спрятать и вернуть в окне «Виджеты на экране».</p></article>
-        <article><span class="tag">новый формат</span><h3>Заезд со звездой</h3><p>Гонщик едет рядом в темпе своего настоящего заезда. Попробуйте за ним успеть.</p></article>
-        <article><span class="tag">мир</span><h3>Деревья и времена года</h3><p>Новые деревья на всех картах. Зимой они без листвы, трава желтеет.</p></article>
+        <article><span class="tag">Анимации</span><h3>Гонщик как живой</h3><p>Пьёт, вытирает пот, оглядывается, встаёт на педали, меняет хват и наклоняется в поворотах.</p></article>
+        <article><span class="tag">Интерфейс</span><h3>Свой экран заезда</h3><p>Любую часть экрана можно спрятать и вернуть в окне «Виджеты на экране».</p></article>
+        <article><span class="tag new">Новый формат</span><h3>Заезд со звездой</h3><p>Гонщик едет рядом в темпе своего настоящего заезда. Попробуйте за ним успеть.</p></article>
+        <article><span class="tag">Мир</span><h3>Деревья и времена года</h3><p>Новые деревья на всех картах. Зимой они без листвы, трава желтеет.</p></article>
       </div>
     </section>
 
     <section class="sec" id="events">
-      <header><h2>Мероприятия и гонки</h2><span class="count">14 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Заезды</p><h2 class="title">Мероприятия и гонки</h2><span class="count">14 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Заезд со звездой.</b> Рядом с вами едет гонщик в темпе своего настоящего заезда, записанного в FIT-файл. Попробуйте за ним успеть.</li>
         <li><b>Заезд с пейсером.</b> Лидер мероприятия едет по профилю скорости, который задал организатор. Над пейсером жёлтая звезда, в списке гонщиков у него скорость, а не Вт/кг.</li>
         <li><b>Гонка «Удержись за пейсером».</b> Кто отстал от пейсера на заданное число метров, выбывает. Побеждает тот, кто продержался дольше всех.</li>
@@ -181,24 +232,24 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
         <li><b>Групповой заезд с «магнитом».</b> Лидер снова виден в списке справа, значок над ним больше не подпрыгивает.</li>
         <li><b>Гонка на велотреке.</b> Круг теперь ровно 347 м, дистанция и «до финиша» считаются верно. Финишная арка стоит на треке, гонщики появляются на полотне лицом по ходу.</li>
         <li><b>Раздельный старт (ТТ):</b> места в протоколе на сайте считаются по времени, а не по порядку финиша.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="spectator">
-      <header><h2>Зрительский режим</h2><span class="count">6 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Трансляции</p><h2 class="title">Зрительский режим</h2><span class="count">6 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Смотреть ТТ-гонку стало удобнее.</b> Видны любые отсечки с местами, отсечки того, за кем вы следите, и список по времени. Длинные имена прокручиваются бегущей строкой. Итоги можно скрыть и открыть снова.</li>
         <li><b>Те же десять камер</b> и те же анимации гонщиков, что и в заезде.</li>
         <li><b>Плохой интернет.</b> При обрыве связи гонщики продолжают ехать по трассе, а не уезжают по прямой в лес. Если связи нет дольше 5 секунд, гонщики скрываются и появляется сообщение. Когда связь вернётся, они появятся на своих местах, перезаходить не нужно.</li>
         <li><b>Меню зрителя</b> открывается с первого нажатия. В нём только нужные зрителю пункты.</li>
         <li>Зритель может зайти заранее и ждать старта сколько угодно. Если мешает VPN, игра подскажет.</li>
         <li>После просмотра мероприятия свободный заезд и GPX снова открываются как обычный заезд, а не как просмотр.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="segments">
-      <header><h2>Сегменты, призраки и достижения</h2><span class="count">6 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Соревнование с собой</p><h2 class="title">Сегменты, призраки и достижения</h2><span class="count">6 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Призрак сегмента.</b> Ваша лучшая попытка едет рядом с вами: по той же траектории, с той же скоростью и мощностью. Он виден только вам, держаться за ним в «драфте» нельзя. Установите рекорд, и призрак сразу заменится новым. Попытки записываются и в мероприятиях.</li>
         <li><b>Скин призрака.</b> Полупрозрачный гонщик и велосипед, есть 4 варианта на выбор.</li>
         <li><b>Моё место на сегменте среди всех.</b> Показывается при подъезде к сегменту, в его карточке и в результатах.</li>
@@ -214,23 +265,23 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
             <li>прохождение 23 сегментов.</li>
           </ul>
         </li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="chat">
-      <header><h2>Чат</h2><span class="count">5 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Общение</p><h2 class="title">Чат</h2><span class="count">5 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Три вида чата:</b> общий чат карты, чат мероприятия и личный.</li>
         <li><b>Личное сообщение в один щелчок.</b> Щёлкните по имени гонщика в окне чата или в списке справа.</li>
         <li>В окне чата видны имена отправителей.</li>
         <li><b>Управление с телефона.</b> Из приложения-компаньона можно выбрать поворот на развилке, управлять тренировкой и переключать виртуальные передачи.</li>
         <li><b>Apple TV:</b> чат открывается и листается пультом, писать в него можно с телефона.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="workouts">
-      <header><h2>Тренировки</h2><span class="count">9 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Тренировки</p><h2 class="title">Тренировки и ERG</h2><span class="count">9 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Время тренировки не теряется.</b> Короткие подвисания до 2 секунд больше не удлиняют тренировку: у пользователей она растягивалась с 2:30 до 2:56. График «План и факт» строится по настоящему времени шагов.</li>
         <li><b>ERG точнее на смене шагов.</b> Новая мощность передаётся станку за 2 секунды до начала шага, поэтому он успевает выйти на неё вовремя.</li>
         <li><b>Шаг «Свободно»</b> больше не отпускает тормоз станка полностью (мощность падала до 0 на Android и на новых установках).</li>
@@ -240,12 +291,12 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
         <li><b>Незаконченная отправка тренировки</b> больше не удаляется, пока сервер не подтвердил, что получил её.</li>
         <li><b>План на главной и календарь</b> совпадают с сайтом. Удалённая или перенесённая тренировка уходит с главной.</li>
         <li><b>«Итоги тренировки»:</b> на графике пульса больше нет провалов, которые давали некоторые датчики.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="gpx">
-      <header><h2>GPX-маршруты</h2><span class="count">12 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Свои маршруты</p><h2 class="title">GPX-маршруты</h2><span class="count">12 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Итог круга и маршрута.</b> На круговом маршруте после каждого круга видны время, средняя мощность, Вт/кг, пульс и разница с прошлым кругом. На маршруте из точки А в точку Б показывается карточка «Маршрут пройден».</li>
         <li><b>Свой отрезок трека.</b> На экране маршрута можно выбрать и старт, и финиш. На финише стоит арка.</li>
         <li><b>Карточка «Маршрут»</b> в заезде: название, пройденное время, круг.</li>
@@ -258,12 +309,12 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
         <li><b>Экран загрузки по треку.</b> Пока грузится GPX-заезд, на экране видна картинка вашего маршрута: профиль с горами или 3D-трек. В мероприятиях по GPX тоже.</li>
         <li>Над миникартой название маршрута, а не имя файла.</li>
         <li>GPX-заезд сохраняется на сервере как заезд по вашему маршруту. Раньше он мог записаться как заезд по острову.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="hud">
-      <header><h2>Экран заезда</h2><span class="count">8 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Интерфейс</p><h2 class="title">Экран заезда</h2><span class="count">8 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Окно «Виджеты на экране».</b> Можно спрятать и вернуть показатели, миникарту, список гонщиков, нижнюю строку, карточки событий, панель тренировки, сообщения чата и имена над гонщиками. Работает мышью, касанием и пультом Apple TV, у зрителя тоже.</li>
         <li><b>Понятные виртуальные передачи.</b> Нейтральная передача обозначена «0», лёгкие «−1…−11», тяжёлые «+1…+12». Раньше было «12 / 24», и это путали со звёздами. Блок появляется сразу в начале заезда, а не после вызова меню. Кнопка «Передачи» прячет и показывает его.</li>
         <li><b>Средняя скорость в движении</b> в нижней строке.</li>
@@ -272,12 +323,12 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
         <li><b>Погода:</b> видно, сколько продлится каждая случайная погода и время суток.</li>
         <li><b>iPhone:</b> экран заезда больше не заходит под «чёлку» и Dynamic Island.</li>
         <li>В «Итогах заезда» средняя скорость в мероприятии показывается правильно. Раньше бывало и 768 км/ч.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="camera">
-      <header><h2>Камеры и анимации гонщика</h2><span class="count">8 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Картинка</p><h2 class="title">Камеры и анимации гонщика</h2><span class="count">8 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Десять видов камеры</b> переключаются кнопкой «Камера» по кругу. Камера отъезжает на скорости и заносится в поворотах. Её можно облететь вокруг гонщика.</li>
         <li><b>Угол обзора 80–120°</b> для видов «Сзади» и «Ближе».</li>
         <li><b>От первого лица на ТТ</b> руки больше не закрывают экран.</li>
@@ -286,21 +337,21 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
         <li><b>ТТ пьёт воду:</b> допивает до конца, ноги продолжают крутить, бутылка не пропадает из руки. Бутылки на шоссе и ТТ теперь фирменные, синие с логотипом WattAttack.</li>
         <li>Ноги и колёса больше не расходятся на резком спринте, колёса крутятся в такт скорости. У ботов тоже.</li>
         <li>Исправлены мелочи: чёрная «манжета» на запястье гонщицы, слишком резкие повороты головы.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="wardrobe">
-      <header><h2>Гардероб</h2><span class="count">3 изменения</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Гараж</p><h2 class="title">Гардероб</h2><span class="count">3 изменения</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Форма и пол хранятся на сервере.</b> После входа на любом устройстве у вас ваш набор. Изменения в гараже сохраняются сразу. При плохом интернете форма больше не сбрасывается.</li>
         <li><b>Новая форма:</b> велоклуба «Северный ветер» (Ямал, Ноябрьск), джерси и велотрусы, и радужная форма чемпиона мира за челлендж «На колесе у чемпиона».</li>
         <li>Боты одеты во все доступные наборы формы и не выглядят одинаковыми.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="world">
-      <header><h2>Карты и мир</h2><span class="count">10 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Маршруты</p><h2 class="title">Карты и мир</h2><span class="count">10 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Новые деревья на всех картах.</b> Зимой они стоят без листвы, трава желтеет. Деревья вдали остаются зелёными, а не превращаются в голые стволы.</li>
         <li>Деревья вдоль дорог стоят в 2,5 м от обочины, а не у бордюра. Сосны и ели больше не «висят» на длинных голых стволах.</li>
         <li><b>Все миникарты перерисованы:</b> чёткие дороги и здания вместо картинки.</li>
@@ -311,40 +362,40 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
         <li>Деревья больше не растут внутри стартовых арок и других объектов.</li>
         <li><b>Новые щиты, флаги и надписи</b> на 7 картах, своя реклама в стартовых городках мероприятий.</li>
         <li>На развилке после смены маршрута круг начинается у стартовых ворот, а прежний маршрут сразу пропадает с экрана.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="devices">
-      <header><h2>Датчики и станки</h2><span class="count">6 изменений</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Bluetooth · ANT+</p><h2 class="title">Датчики и станки</h2><span class="count">6 изменений</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Подключение по Bluetooth проверено и доработано</b>, устройства подключаются надёжнее.</li>
         <li><b>Cycplus T7 и другие станки по ANT+:</b> команды ERG и уклона доходят надёжно.</li>
         <li><b>Yesoul по Bluetooth:</b> мощность больше не завышена в 256 раз.</li>
         <li><b>Измеритель мощности Stages</b> больше не принимается за управляемый станок Wahoo.</li>
         <li><b>Windows:</b> подключаются датчики Bluetooth, которым нужно сопряжение (например, Garmin HRM 600).</li>
         <li><b>Пульсометр:</b> при поиске игра советует «Наденьте датчик и смочите электроды», а не «покрутите педали».</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="network">
-      <header><h2>Связь и стабильность</h2><span class="count">3 изменения</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Надёжность</p><h2 class="title">Связь и стабильность</h2><span class="count">3 изменения</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>Пропал интернет посреди онлайн-заезда.</b> Раньше гонщик останавливался и уже не возвращался в онлайн. Теперь он едет дальше, а когда связь появится, снова оказывается в онлайне (Mac, iOS, Android).</li>
         <li>Развилки без связи работают так же, как при связи с сервером.</li>
         <li>Игра больше не падает, если связь оборвалась во время отправки заезда.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="profile">
-      <header><h2>Профиль и аккаунт</h2><span class="count">2 изменения</span><button class="copy" type="button">Скопировать</button></header>
-      <ul>
+      <header><p class="eyebrow">Аккаунт</p><h2 class="title">Профиль</h2><span class="count">2 изменения</span><button class="copy" type="button">Скопировать</button></header>
+      <div class="panel"><ul>
         <li><b>«Сменить профиль» без перезапуска игры.</b> Сразу открывается экран входа, без заставки, и все данные прошлого аккаунта сбрасываются.</li>
         <li><b>Дробный вес:</b> например, 72,5 кг. Он сохраняется и на сервере.</li>
-      </ul>
+      </ul></div>
     </section>
 
     <section class="sec" id="platforms">
-      <header><h2>Платформы</h2><span class="count">5 платформ</span><button class="copy" type="button">Скопировать</button></header>
+      <header><p class="eyebrow">Устройства</p><h2 class="title">Платформы</h2><span class="count">5 платформ</span><button class="copy" type="button">Скопировать</button></header>
       <div class="plat">
         <div>
           <p class="sub">Windows</p>
@@ -394,13 +445,21 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
       </div>
     </section>
 
+    <section class="end">
+      <div>
+        <h2 class="title">Обновитесь и поехали</h2>
+        <p>Если вы заметили ошибку или у вас есть идея, пишите в поддержку. Многое в этом обновлении сделано по вашим отзывам.</p>
+      </div>
+      <a class="btn btn-red" href="https://wattattack.com/">Попробовать бесплатно</a>
+    </section>
+
   </div>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>Если вы заметили ошибку или у вас есть идея, пишите в поддержку. Многое в этом обновлении сделано по вашим отзывам.</span>
-    <span>WattAttack · ноябрь 2026</span>
+    <span>© WattAttack, 2026</span>
+    <a href="https://wattattack.com/">wattattack.com</a>
   </div>
 </footer>
 
@@ -435,7 +494,7 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
         walk(col.querySelector('ul'), 0);
       });
     } else {
-      walk(sec.querySelector('ul'), 0);
+      walk(sec.querySelector('.panel > ul'), 0);
     }
     return out.join('\n');
   }
@@ -456,6 +515,27 @@ footer .wrap { padding-block: 28px 40px; color: var(--muted); font-size: 15px; d
       } catch (e) { selectFallback(sec); }
     });
   });
+
+  // Highlight the pill of the section in view
+  var pills = Array.prototype.slice.call(document.querySelectorAll('.pills a'));
+  var byId = {};
+  pills.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var a = byId[e.target.id];
+        if (!a) return;
+        pills.forEach(function (p) { p.classList.toggle('on', p === a); });
+        // Keep the active pill visible in the strip without touching the page scroll
+        var strip = a.parentNode;
+        if (a.offsetLeft < strip.scrollLeft || a.offsetLeft + a.offsetWidth > strip.scrollLeft + strip.clientWidth) {
+          strip.scrollLeft = a.offsetLeft - 20;
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  }
 })();
 </script>
 </body>
