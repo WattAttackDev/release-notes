@@ -79,9 +79,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .stats span { font: 700 12px var(--f-body); letter-spacing: 1.2px; text-transform: uppercase; color: var(--quiet); }
 
 /* Pills nav */
-.pills { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 61px); z-index: 9; background: rgba(10,22,48,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hairline); }
-.pills .wrap { display: flex; gap: 8px; overflow-x: auto; padding-block: 12px; scrollbar-width: none; }
-.pills .wrap::-webkit-scrollbar { display: none; }
+.pills { background: var(--bg); border-bottom: 1px solid var(--hairline); }
+.pills .wrap { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 16px; }
 .pills a { flex: none; font: 700 15px var(--f-body); color: var(--text); text-decoration: none; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--outline); white-space: nowrap; }
 .pills a:hover { background: var(--fill-hover); }
 .pills a.on { background: var(--text); color: var(--bg); border-color: var(--text); }
@@ -101,8 +100,8 @@ main .wrap { display: grid; gap: 72px; padding-block: 56px 80px; }
 .hl p { margin: 0; color: var(--muted); font-size: 16px; }
 
 /* Sections */
-.sec { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px 48px; scroll-margin-top: 130px; }
-.sec header { display: grid; gap: 10px; align-content: start; position: sticky; top: 140px; }
+.sec { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px 48px; scroll-margin-top: 90px; }
+.sec header { display: grid; gap: 10px; align-content: start; position: sticky; top: 96px; }
 .sec .count { font: 600 15px var(--f-body); color: var(--quiet); }
 .copy { justify-self: start; margin-top: 4px; font: 700 13px var(--f-body); letter-spacing: 1px; text-transform: uppercase; color: var(--text); background: transparent; border: 1px solid var(--outline); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
 .copy:hover { background: var(--fill-hover); }
@@ -137,7 +136,7 @@ footer .wrap { padding-block: 28px 40px; color: var(--quiet); font-size: 14px; d
   .bar .btn-line { display: none; }
   .bar .btn { padding: 11px 14px; font-size: 13px; }
   .logo { font-size: 24px; }
-  .pills { top: calc(env(safe-area-inset-top, 0px) + 57px); }
+  .pills a { font-size: 14px; padding: 7px 13px; }
   .panel, .plat > div { padding: 22px 20px; }
   .hero .wrap { padding-block: 44px 40px; }
   .hero .lead { font-size: 17px; }
@@ -197,7 +196,7 @@ footer .wrap { padding-block: 28px 40px; color: var(--quiet); font-size: 14px; d
 <main>
   <div class="wrap">
 
-    <section id="main" style="scroll-margin-top:130px">
+    <section id="main" style="scroll-margin-top:90px">
       <div class="hl-head">
         <p class="eyebrow">Коротко о главном</p>
         <h2 class="title">Девять причин сесть на станок</h2>
@@ -527,11 +526,6 @@ footer .wrap { padding-block: 28px 40px; color: var(--quiet); font-size: 14px; d
         var a = byId[e.target.id];
         if (!a) return;
         pills.forEach(function (p) { p.classList.toggle('on', p === a); });
-        // Keep the active pill visible in the strip without touching the page scroll
-        var strip = a.parentNode;
-        if (a.offsetLeft < strip.scrollLeft || a.offsetLeft + a.offsetWidth > strip.scrollLeft + strip.clientWidth) {
-          strip.scrollLeft = a.offsetLeft - 20;
-        }
       });
     }, { rootMargin: '-40% 0px -55% 0px' });
     Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
