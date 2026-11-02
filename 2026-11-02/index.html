@@ -85,7 +85,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .pills a:hover { background: var(--fill-hover); }
 .pills a.on { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-main .wrap { display: grid; gap: 72px; padding-block: 56px 80px; }
+main .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 72px; padding-block: 56px 80px; }
 
 .eyebrow { margin: 0; font: 800 16px var(--f-body); letter-spacing: 1.4px; text-transform: uppercase; color: var(--link); }
 .title { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: -.3px; text-wrap: balance; }
@@ -121,6 +121,7 @@ main .wrap { display: grid; gap: 72px; padding-block: 56px 80px; }
 /* Bottom CTA */
 .end { background: linear-gradient(120deg, var(--strong), var(--card)); border: 1px solid var(--hairline); border-radius: var(--r-card); padding: 36px; display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: center; justify-content: space-between; }
 .end p { margin: 8px 0 0; color: var(--muted); max-width: 56ch; }
+.end .btn { white-space: normal; text-align: center; }
 
 footer { border-top: 1px solid var(--divider); background: var(--bg-deep); }
 footer .wrap { padding-block: 28px 40px; color: var(--quiet); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
